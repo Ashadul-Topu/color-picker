@@ -6,18 +6,18 @@
 // step5: take input and show color code in the hex input field
 // step6:
 
-// let toastMsg = null;
+
 window.onload = function(){
     main()
 }
 
-
+let toastMsg = null;
 
 function main() {
     // variable declaration
     const colorBtn = document.getElementById('color-btn');
     const showColor = document.querySelector('.color-plate');
-    const copyColor = document.getElementById('copy-color');
+    const copyColor = document.getElementById('copy-btn');
     const inputColor = document.getElementById('input');
     const outputColor = document.getElementById('output');
     const colorRed = document.getElementById('color-slider-red');
@@ -100,41 +100,41 @@ function main() {
         navigator.clipboard.writeText(`#${inputColor.value}`)
         console.log('toastMsg');
 
-        // //remove existing toast message
-        // if(toastMsg !== null){
-        //     toastMsg.remove();
-        // }
-        // if(isValidHex(inputColor.value)){
-        //     generateToastMsg(`#${inputColor.value} copied`)
-        // }else{
-        //     console.log('Invalid color code');
-        //     alert('Invalid color code');
-        // }
+        //remove existing toast message
+        if(toastMsg !== null){
+            toastMsg.remove();
+        }
+        if(isValidHex(inputColor.value)){
+            generateToastMsg(`#${inputColor.value} copied`)
+        }else{
+            console.log('Invalid color code');
+            alert('Invalid color code');
+        }
     })
 
-    // //active toast message
-    // function generateToastMsg(msg){
-    //     toastMsg = document.createElement('p')
+    //active toast message
+    function generateToastMsg(msg){
+        toastMsg = document.createElement('p')
 
-    //     //create dynamic toast message (color code)
-    //     toastMsg.innerText = msg
-    //     document.body.appendChild(toastMsg)
-    //     toastMsg.className = 'toast-message toast-msg-in'
+        //create dynamic toast message (color code)
+        toastMsg.innerText = msg
+        document.body.appendChild(toastMsg)
+        toastMsg.className = 'toast-message toast-msg-in'
 
-    //     // remove the toast message when user clicks inside the toast message
-    //     toastMsg.addEventListener('click', function(){
-    //         toastMsg.classList.remove('toast-msg-in');
-    //         toastMsg.classList.add('toast-msg-out');
+        // remove the toast message when user clicks inside the toast message
+        toastMsg.addEventListener('click', function(){
+            toastMsg.classList.remove('toast-msg-in');
+            toastMsg.classList.add('toast-msg-out');
 
-    //         // remove toast message permanently when user clicked  it.
-    //         toastMsg.addEventListener("animationend", function(){
-    //         toastMsg.remove();
-    //         toastMsg = null; // remove previous toast message 
-    //         })
-    //     });
-    //     // clear toast message after a timeout
-    //     setTimeout(() => {
-    //         document.body.removeChild(toastMsg)
-    //     }, 4000)
-    // }
+            // remove toast message permanently when user clicked  it.
+            toastMsg.addEventListener("animationend", function(){
+            toastMsg.remove();
+            toastMsg = null; // remove previous toast message 
+            })
+        });
+        // clear toast message after a timeout
+        setTimeout(() => {
+            document.body.removeChild(toastMsg)
+        }, 4000)
+    }
 }
