@@ -13,7 +13,7 @@ body{
     position: absolute;
     top: 0%;
     left: 50%;
-    transform: translate(-50%, 10%);
+    transform: translate(-50%, 5%);
     max-width: 500px;
     width: 100%;
     border: 1px solid #fff;
@@ -111,14 +111,21 @@ button{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 4%;
 }
-.sider-color-title{
+.slider-color-title{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 10px;
+    padding: 0 10px 10px ;
+   
 }
-
+.slider-color{
+    width: 90%;
+}
+.slider-color input{
+    width: 100%;
+}
 .toast-message{
     position: fixed;
     top: 20px;

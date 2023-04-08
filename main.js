@@ -6,10 +6,12 @@
 // step5: take input and show color code in the hex input field
 // step6:
 
-
+// let toastMsg = null;
 window.onload = function(){
     main()
 }
+
+
 
 function main() {
     // variable declaration
@@ -17,7 +19,7 @@ function main() {
     const showColor = document.querySelector('.color-plate');
     const copyColor = document.getElementById('copy-color');
     const inputColor = document.getElementById('input');
-    const output = document.getElementById('output');
+    const outputColor = document.getElementById('output');
     const colorRed = document.getElementById('color-slider-red');
     const colorGreen = document.getElementById('color-slider-green');
     const colorBlue = document.getElementById('color-slider-blue');
@@ -25,23 +27,21 @@ function main() {
 
     // function invoke
     colorBtn.addEventListener('click', function(){
+        // console.log('generate color btn click');
         const color = generateColorDecimal();
         const hexColor = generateColorHex(color)
         const rgbColor = generateColorRGB(color)
         showColor.style.backgroundColor = hexColor // change Background Color
-        //  input.value = inputColor.toUpperCase().substring(1)
-        //  output.value = rgbColor
+        inputColor.value = hexColor.toUpperCase().substring(1)
+        outputColor.value = rgbColor
 
-         console.log('generate color btb click');
+         
     })
-
-}
-
     //Generate random color
     function generateColorDecimal(){
-        const r = Math.floor(Math.random() * 256)
-        const g = Math.floor(Math.random() * 256)
-        const b = Math.floor(Math.random() * 256)
+        const red = Math.floor(Math.random() * 256)
+        const green = Math.floor(Math.random() * 256)
+        const blue = Math.floor(Math.random() * 256)
     
         return {
             red,
@@ -65,83 +65,76 @@ function main() {
         return `rgb(${red}, ${green}, ${blue})`
     }
 
-
-    //copy color code
-    // HEX color code
-    copyColor.addEventListener('click', function(){
-        navigator.clipboard.writeText(`#${input.value}`)
-
-        //remove existing toast message
-        if(toastMsg !== null){
-            toastMsg.remove();
-        }
-
-        //prevent copying hex code if it is not valid
-        if(isValidHex(input.value)){
-            generateToastMsg(`#${input.value} copied`)
-        }else{
-            alert('Invalid color code');
-        }
-       
-    })
-
-
-
-    // step 5: active toast message
-    function generateToastMsg(msg){
-        toastMsg = document.createElement('p')
-
-        // step 6: create dynamic toast message (color code)
-        toastMsg.innerText = msg
-        document.body.appendChild(toastMsg)
-        // toastMsg.classList.add("toast-message") // anther way to add class below
-        toastMsg.className = 'toast-message toast-msg-in'
-
-        // remove the toast message when user clicks inside the toast message
-        toastMsg.addEventListener('click', function(){
-            toastMsg.classList.remove('toast-msg-in');
-            toastMsg.classList.add('toast-msg-out');
-
-
-            // step 7: clear toast message
-            // remove toast message permanently when user clicked  it.
-            toastMsg.addEventListener("animationend", function(){
-                toastMsg.remove();
-                toastMsg = null; // remove previous toast message 
-            })
-        });
-
-        setTimeout(() => {
-            document.body.removeChild(toastMsg)
-        }, 4000)
-    }
-
-    //step 9: create isHexValid function
-    function isValidHex(color){
-        if(color.length !== 6 ) return false;
-        return /^[0-9A-Fa-f]{6}$/i.test(color) // checking color is valid using Regx 
-       
-    }
-
-    // Step 10: implement change handler on input field
-    output.addEventListener('keyup', function(e){
+    // implement change handler for hex code input field
+    inputColor.addEventListener('keyup', function(e){
         const color = e.target.value
-        // console.log(e);
+        console.log(e);
         if (color){
-            output.value = color.toUpperCase()
+            inputColor.value = color.toUpperCase()
             if(isValidHex(color)){
-                root.style.backgroundColor = `#${color}`
-                output2.value = hexToRgb(color)
-                // console.log(e);
+                showColor.style.backgroundColor = `#${color}`
+                outputColor.value = hexToRgb(color)
             }
         }
     })
-
-    function hexToRgb(hex){
-        const r = parseInt(hex.slice(0,2), 16)
-        const g = parseInt(hex.slice(2,4), 16)
-        const b = parseInt(hex.slice(4), 16)
-        // console.log(r, g, b);
-        return `rgb(${r}, ${g}, ${b})`
+       // create isHexValid function
+       function isValidHex(color){
+        if(color.length !== 6 ) return false;
+        return /^[0-9A-Fa-f]{6}$/i.test(color) // checking color is valid using Regx 
+        
     }
-    console.log(hexToRgb("ffffff"));
+    
+    // create hex to rgb function
+    function hexToRgb(hex){
+        const red = parseInt(hex.slice(0,2), 16)
+        const green = parseInt(hex.slice(2,4), 16)
+        const blue = parseInt(hex.slice(4), 16)
+        // console.log(r, g, b);
+        return `rgb(${red}, ${green}, ${blue})`
+    }
+
+
+    // copy toast message
+
+    copyColor.addEventListener('click', function(){
+        navigator.clipboard.writeText(`#${inputColor.value}`)
+        console.log('toastMsg');
+
+        // //remove existing toast message
+        // if(toastMsg !== null){
+        //     toastMsg.remove();
+        // }
+        // if(isValidHex(inputColor.value)){
+        //     generateToastMsg(`#${inputColor.value} copied`)
+        // }else{
+        //     console.log('Invalid color code');
+        //     alert('Invalid color code');
+        // }
+    })
+
+    // //active toast message
+    // function generateToastMsg(msg){
+    //     toastMsg = document.createElement('p')
+
+    //     //create dynamic toast message (color code)
+    //     toastMsg.innerText = msg
+    //     document.body.appendChild(toastMsg)
+    //     toastMsg.className = 'toast-message toast-msg-in'
+
+    //     // remove the toast message when user clicks inside the toast message
+    //     toastMsg.addEventListener('click', function(){
+    //         toastMsg.classList.remove('toast-msg-in');
+    //         toastMsg.classList.add('toast-msg-out');
+
+    //         // remove toast message permanently when user clicked  it.
+    //         toastMsg.addEventListener("animationend", function(){
+    //         toastMsg.remove();
+    //         toastMsg = null; // remove previous toast message 
+    //         })
+    //     });
+    //     // clear toast message after a timeout
+    //     setTimeout(() => {
+    //         document.body.removeChild(toastMsg)
+    //     }, 4000)
+    // }
+}
